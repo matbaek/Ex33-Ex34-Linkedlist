@@ -24,14 +24,31 @@ namespace Adt
         public void Insert(object data)
         {
             Node toAdd = new Node(data);
-            toAdd.Next = Head;
-            Head = toAdd;
+            toAdd.Next = head;
+            head = toAdd;
             Count++;
         }
 
-        public void Insert(object item, int index)
+        public void Insert(object data, int index)
         {
 
+            if (index <= 0)
+            {
+                Insert(data);
+            }
+            else
+            {
+                Node currentNode = this.head;
+                for (int i = 0; i < index - 1; i++)
+                {
+                    currentNode = currentNode.Next;
+                }
+                Node nextNode = currentNode.Next;
+                currentNode.Next = new Node(data);
+                currentNode.Next.Next = nextNode;
+                Count++;
+            }
+            
         }
 
         public void Delete()
@@ -43,7 +60,20 @@ namespace Adt
 
         public void Delete(int index)
         {
-            
+            Node currentNode = this.head;
+            if(index == 0)
+            {
+                this.head = currentNode.Next;
+            }
+            else
+            {
+                for (int i = 0; i < index - 1; i++)
+                {
+                    currentNode = currentNode.Next;
+                }
+                currentNode.Next = currentNode.Next.Next;
+                Count--;
+            }
         }
 
         public object ItemAt(int index)
