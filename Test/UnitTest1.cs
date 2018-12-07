@@ -40,8 +40,8 @@ namespace Test
         {
             MyLinkedList l1 = new MyLinkedList();
 
-            l1.Insert(c1);
             l1.Insert(c2);
+            l1.Insert(c1);
             Assert.AreEqual(2, l1.Count);
             Assert.AreEqual("2 Bjørn Borg 30\n1 Anders And 15\n", l1.ToString());
         }
@@ -50,8 +50,8 @@ namespace Test
         {
             MyLinkedList l1 = new MyLinkedList();
 
-            l1.Insert(c1);
             l1.Insert(c2);
+            l1.Insert(c1);
             l1.Delete();
             Assert.AreEqual(1, l1.Count);
             Assert.AreEqual("1 Anders And 15\n", l1.ToString());
@@ -61,8 +61,8 @@ namespace Test
         {
             MyLinkedList l1 = new MyLinkedList();
 
-            l1.Insert(c1);
             l1.Insert(c2);
+            l1.Insert(c1);
             Assert.AreEqual(c2, l1.ItemAt(0));
             Assert.AreEqual(c1, l1.ItemAt(1));
             Assert.AreEqual("2 Bjørn Borg 30\n1 Anders And 15\n", l1.ToString());
@@ -73,8 +73,8 @@ namespace Test
         {
             MyLinkedList l1 = new MyLinkedList();
 
-            l1.Insert(c1);
             l1.Insert(c2);
+            l1.Insert(c1);
             l1.Insert(c3, 1);
             l1.Insert(c4, 0);
             l1.Insert(c5, 4);
@@ -86,8 +86,8 @@ namespace Test
         {
             MyLinkedList l1 = new MyLinkedList();
 
-            l1.Insert(c1);
             l1.Insert(c2);
+            l1.Insert(c1);
             l1.Insert(c3, 1);
             l1.Insert(c4, 0);
             l1.Insert(c5, 4);
@@ -96,7 +96,44 @@ namespace Test
             Assert.AreEqual(3, l1.Count);
             Assert.AreEqual("4 Kurt Nielsen 33\n2 Bjørn Borg 30\n3 Cristian Nielsen 20\n", l1.ToString());
         }
+        [TestMethod]
+        public void TestRervers()
+        {
+            MyLinkedList l1 = new MyLinkedList();
+
+            l1.Insert(c1);
+            l1.Insert(c2);
+            l1.Insert(c3);
+            l1.Reverse();
+            Assert.AreEqual(3, l1.Count);
+            Assert.AreEqual("3 Cristian Nielsen 20\n2 Bjørn Borg 30\n1 Anders And 15\n", l1.ToString());
+        }
+        [TestMethod]
+        public void Testswap()
+        {
+            MyLinkedList l1 = new MyLinkedList();
+
+            l1.Insert(c3);
+            l1.Insert(c1);
+            l1.Insert(c2);
+            l1.Swap(1);
+            Assert.AreEqual(3, l1.Count);
+            Assert.AreEqual("3 Cristian Nielsen 20\n2 Bjørn Borg 30\n1 Anders And 15\n", l1.ToString());
+        }
+        [TestMethod]
+        public void TestFremTilbage()
+        {
+            MyLinkedList l1 = new MyLinkedList();
+
+            l1.Insert(c3);
+            l1.Insert(c2);
+            l1.Insert(c1);
+            Assert.AreEqual(3, l1.Count);
+            Assert.AreEqual("3 Cristian Nielsen 20\n2 Bjørn Borg 30\n1 Anders And 15\n2 Bjørn Borg 30\n3 Cristian Nielsen 20\n", l1.FremTilbage());
+        }
 
     }
+
+
 
 }

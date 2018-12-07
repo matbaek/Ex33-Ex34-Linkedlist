@@ -24,17 +24,31 @@ namespace Adt
         public void Insert(object data)
         {
             Node toAdd = new Node(data);
-            toAdd.Next = head;
-            head = toAdd;
+            if(this.head == null)
+            {
+                this.head = toAdd;
+            }
+            else
+            {
+                Node lastNode = this.head;
+                while (lastNode.Next != null)
+                {
+                    lastNode = lastNode.Next;
+                }
+                lastNode.Next = toAdd;
+                toAdd.Prev = lastNode;
+            }
             Count++;
         }
 
         public void Insert(object data, int index)
         {
 
-            if (index <= 0)
+            if (index == 0)
             {
-                Insert(data);
+                Node toAdd = new Node(data);
+                toAdd.Next = head;
+                head = toAdd;
             }
             else
             {
@@ -46,8 +60,8 @@ namespace Adt
                 Node nextNode = currentNode.Next;
                 currentNode.Next = new Node(data);
                 currentNode.Next.Next = nextNode;
-                Count++;
             }
+            Count++;
             
         }
 
@@ -86,6 +100,53 @@ namespace Adt
             return currentNode.Data;
         }
 
+        public void Reverse()
+        {
+            Node startNode = this.head;
+            Node tempNode = null;
+
+            while (startNode != null)
+            {
+                tempNode = startNode.Next;
+                startNode.Next = startNode.Prev;
+                startNode.Prev = tempNode;
+
+                if (startNode.Prev == null)
+                {
+                    this.head = startNode;
+                }
+
+                startNode = startNode.Prev;
+            }
+        }
+
+        public void Swap(int index)
+        {
+            Node currentNode = this.head;
+            Node tempNode = new Node(null);
+            for (int i = 0; i < index; i++)
+            {
+                currentNode = currentNode.Next;
+            }
+
+            if (currentNode.Next != null) { 
+                Node nodeAfterCurrentNode = currentNode.Next;
+                tempNode.Data = currentNode.Data;
+                currentNode.Data = nodeAfterCurrentNode.Data;
+                nodeAfterCurrentNode.Data = tempNode.Data;
+            }
+        }
+
+        public string FremTilbage()
+        {
+            string result = ToString();
+            Reverse();
+            Delete();
+            result += ToString();
+
+            return result;
+        }
+
         public override string ToString()
         {
             Node currentNode = this.head;
@@ -102,12 +163,19 @@ namespace Adt
     public class Node
     {
         private Node next;
+        private Node prev;
         private object data;
 
         public Node Next
         {
             get { return this.next; }
             set { this.next = value; }
+        }
+
+        public Node Prev
+        {
+            get { return this.prev; }
+            set { this.prev = value; }
         }
 
         public object Data
